@@ -2,11 +2,15 @@ package pl.coderstrust.foobar;
 
 public class FooBar {
 
-    public static void printFooBar(int number) {
+    public static void main(String[] args) {
+        printFooBar(100);
+    }
 
+    public static void printFooBar(int number) {
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i <= number; i++) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(i + " ");
+            stringBuilder.setLength(0);
+            stringBuilder.append(i).append(" ");
             if (i % 3 == 0) {
                 stringBuilder.append("Foo");
             }
@@ -15,10 +19,5 @@ public class FooBar {
             }
             System.out.println(stringBuilder);
         }
-    }
-
-    public static void main(String[] args) {
-
-        printFooBar(100);
     }
 }
