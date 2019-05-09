@@ -10,7 +10,7 @@ public class MultiplicationTable {
         printMultiplicationTable(32);
     }
 
-    private static void printMultiplicationTable(int size) {
+    public static void printMultiplicationTable(int size) {
         String singleNumberPattern = getFormattingPatternForSingleNumber(size);
         String multiplicationPattern = getFormattingPatternForMultiplication(size);
         System.out.printf(singleNumberPattern, "");
