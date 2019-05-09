@@ -2,8 +2,6 @@ package pl.coderstrust.multiplication;
 
 public class MultiplicationTable {
 
-    private static int spaceRepeater;
-
     public static void main(String[] args) {
         printMultiplicationTable(3);
         System.out.println();
@@ -12,41 +10,30 @@ public class MultiplicationTable {
         printMultiplicationTable(32);
     }
 
-    public static void printMultiplicationTable(int size) {
-        // header
+    private static void printMultiplicationTable(int size) {
+        String singleNumberPattern = getFormattingPatternForSingleNumber(size);
+        String multiplicationPattern = getFormattingPatternForMultiplication(size);
+        System.out.printf(singleNumberPattern, "");
         for (int i = 1; i <= size; i++) {
-            printFirstRow(i, size);
+            System.out.printf(multiplicationPattern, i);
         }
-        System.out.print("\n".repeat(2));
-        // table
+        System.out.println();
         for (int i = 1; i <= size; i++) {
-            printNumberInFirstColumn(i, size);
+            System.out.printf(singleNumberPattern, i);
             for (int j = 1; j <= size; j++) {
-                printResultOfMultiplication(i, j, size);
+                System.out.printf(multiplicationPattern, i * j);
             }
-            System.out.print("\n".repeat(2));
+            System.out.println();
         }
     }
 
-    public static void printFirstRow(int i, int size) {
-        spaceRepeater = Integer.toString(size * size).length() + 2 - Integer.toString(i).length();
-        switch (i) {
-            case 1:
-                System.out.print(String.format(" ".repeat(Integer.toString(size).length() + 1)));
-                System.out.print(String.format("%s%d", " ".repeat(spaceRepeater), i));
-                break;
-            default:
-                System.out.print(String.format("%s%d", " ".repeat(spaceRepeater), i));
-        }
+    private static String getFormattingPatternForSingleNumber(int number) {
+        int width = String.valueOf(number).length();
+        return "%" + width + "s";
     }
 
-    public static void printNumberInFirstColumn(int i, int size) {
-        spaceRepeater = Integer.toString(size).length() + 1 - Integer.toString(i).length();
-        System.out.print(String.format("%s%d", " ".repeat(spaceRepeater), i));
-    }
-
-    public static void printResultOfMultiplication(int i, int j, int size) {
-        spaceRepeater = Integer.toString(size * size).length() + 2 - Integer.toString(i * j).length();
-        System.out.print(String.format("%s%d", " ".repeat(spaceRepeater), i * j));
+    private static String getFormattingPatternForMultiplication(int number) {
+        int width = String.valueOf(number * number).length() + 1;
+        return "%" + width + "s";
     }
 }
