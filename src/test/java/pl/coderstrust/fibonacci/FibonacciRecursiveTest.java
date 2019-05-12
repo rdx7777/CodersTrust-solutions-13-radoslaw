@@ -1,80 +1,33 @@
 package pl.coderstrust.fibonacci;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FibonacciRecursiveTest {
 
-    private FibonacciRecursive fibonacciRecursive;
-
-    @Before
-    public void setup() {
+    @Test
+    public void shouldReturnCorrectValue() {
         // given
-        fibonacciRecursive = new FibonacciRecursive();
-    }
+        int fibonacciNumberInOrder = 10;
 
-    @Test
-    public void shouldReturnMinus1ForNegativeIndex() {
-        // then
-        long fibonacci = fibonacciRecursive.fibonacci(-5);
-
-        // then
-        assertThat(fibonacci).isEqualTo(-1);
-    }
-
-    @Test
-    public void shouldReturn0ForFibonacciNumberWithIndex0() {
-        // then
-        long fibonacci = fibonacciRecursive.fibonacci(0);
-
-        // then
-        assertThat(fibonacci).isEqualTo(0);
-    }
-
-    @Test
-    public void shouldReturn1ForFibonacciNumberWithIndex1() {
         // when
-        long fibonacci = fibonacciRecursive.fibonacci(1);
+        long expected = FibonacciRecursive.fibonacci(fibonacciNumberInOrder);
 
         // then
-        assertThat(fibonacci).isEqualTo(1);
+        assertThat(expected).isEqualTo(55);
     }
 
     @Test
-    public void shouldReturn1ForFibonacciNumberWithIndex2() {
-        // when
-        long fibonacci = fibonacciRecursive.fibonacci(2);
+    public void shouldThrowExceptionForInvalidArgument() {
+        // given
+        int fibonacciNumberInOrder = -10;
+
+//        // when
+//        FibonacciRecursive.fibonacci(fibonacciNumberInOrder);
 
         // then
-        assertThat(fibonacci).isEqualTo(1);
-    }
-
-    @Test
-    public void shouldReturn2ForFibonacciNumberWithIndex3() {
-        // when
-        long fibonacci = fibonacciRecursive.fibonacci(3);
-
-        // then
-        assertThat(fibonacci).isEqualTo(2);
-    }
-
-    @Test
-    public void shouldReturn5ForFibonacciNumberWithIndex5() {
-        // when
-        long fibonacci = fibonacciRecursive.fibonacci(5);
-
-        // then
-        assertThat(fibonacci).isEqualTo(5);
-    }
-
-    @Test
-    public void shouldReturn55ForFibonacciNumberWithIndex10() {
-        // when
-        long fibonacci = fibonacciRecursive.fibonacci(10);
-
-        // then
-        assertThat(fibonacci).isEqualTo(55);
+        assertThrows(IllegalArgumentException.class, () -> FibonacciRecursive.fibonacci(fibonacciNumberInOrder));
     }
 }
