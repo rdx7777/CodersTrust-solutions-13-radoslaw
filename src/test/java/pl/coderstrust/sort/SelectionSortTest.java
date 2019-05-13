@@ -22,13 +22,6 @@ public class SelectionSortTest {
 
     @Test
     public void shouldTestPassedArrayIsNotNull() {
-        // given
-        int[] input = {};
-
-        // when
-//        int[] actual = SelectionSort.sort(input);
-
-        // then
-        assertThrows(NullPointerException.class, () -> SelectionSort.sort(input));
+        assertThrows(NullPointerException.class, () -> SelectionSort.sort(new int[0]));
     }
 }

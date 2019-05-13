@@ -22,13 +22,6 @@ public class BubbleSortTest {
 
     @Test
     public void shouldTestPassedArrayIsNotNull() {
-        // given
-        int[] input = {};
-
-        // when
-//        int[] actual = BubbleSort.sort(input);
-
-        // then
-        assertThrows(NullPointerException.class, () -> BubbleSort.sort(input));
+        assertThrows(NullPointerException.class, () -> BubbleSort.sort(new int[0]));
     }
 }
