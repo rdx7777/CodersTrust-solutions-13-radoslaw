@@ -21,13 +21,6 @@ public class FibonacciIterativeTest {
 
     @Test
     public void shouldThrowExceptionForInvalidArgument() {
-        // given
-        int fibonacciNumberInOrder = -10;
-
-//        // when
-//        FibonacciIterative.fibonacci(fibonacciNumberInOrder);
-
-        // then
-        assertThrows(IllegalArgumentException.class, () -> FibonacciIterative.fibonacci(fibonacciNumberInOrder));
+        assertThrows(IllegalArgumentException.class, () -> FibonacciIterative.fibonacci(-10));
     }
 }

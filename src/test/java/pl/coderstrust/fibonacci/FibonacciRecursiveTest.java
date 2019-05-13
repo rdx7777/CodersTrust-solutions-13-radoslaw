@@ -21,13 +21,6 @@ public class FibonacciRecursiveTest {
 
     @Test
     public void shouldThrowExceptionForInvalidArgument() {
-        // given
-        int fibonacciNumberInOrder = -10;
-
-//        // when
-//        FibonacciRecursive.fibonacci(fibonacciNumberInOrder);
-
-        // then
-        assertThrows(IllegalArgumentException.class, () -> FibonacciRecursive.fibonacci(fibonacciNumberInOrder));
+        assertThrows(IllegalArgumentException.class, () -> FibonacciRecursive.fibonacci(-10));
     }
 }
