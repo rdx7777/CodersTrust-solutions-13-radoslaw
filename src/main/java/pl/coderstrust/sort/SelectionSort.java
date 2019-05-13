@@ -4,6 +4,9 @@ public class SelectionSort {
 
     public static int[] sort(int[] array) {
         int[] sortedArray = array.clone();
+        if (sortedArray.length == 0) {
+            throw new NullPointerException("Passed array can not be empty.");
+        }
         for (int i = 0; i < sortedArray.length; i++) {
             int checked = sortedArray[i];
             for (int j = i + 1; j < sortedArray.length; j++) {

@@ -3,6 +3,7 @@ package pl.coderstrust.sort;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SelectionSortTest {
 
@@ -17,5 +18,17 @@ public class SelectionSortTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldTestPassedArrayIsNotNull() {
+        // given
+        int[] input = {};
+
+        // when
+//        int[] actual = SelectionSort.sort(input);
+
+        // then
+        assertThrows(NullPointerException.class, () -> SelectionSort.sort(input));
     }
 }

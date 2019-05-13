@@ -3,6 +3,7 @@ package pl.coderstrust.sort;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BubbleSortTest {
 
@@ -17,5 +18,17 @@ public class BubbleSortTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldTestPassedArrayIsNotNull() {
+        // given
+        int[] input = {};
+
+        // when
+//        int[] actual = BubbleSort.sort(input);
+
+        // then
+        assertThrows(NullPointerException.class, () -> BubbleSort.sort(input));
     }
 }

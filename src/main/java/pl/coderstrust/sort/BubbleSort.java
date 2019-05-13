@@ -4,6 +4,9 @@ public class BubbleSort {
 
     public static int[] sort(int[] array) {
         int[] sortedArray = array.clone();
+        if (sortedArray.length == 0) {
+            throw new NullPointerException("Passed array can not be empty.");
+        }
         for (int i = 0; i < sortedArray.length; i++) {
             for (int j = 1; j < sortedArray.length; j++) {
                 if (sortedArray[j - 1] > sortedArray[j]) {
