@@ -4,7 +4,7 @@ public class SelectionSort {
 
     public static int[] sort(int[] array) {
         if (array == null) {
-            throw new IllegalArgumentException("Passed array can not be null.");
+            throw new IllegalArgumentException("Passed array cannot be null.");
         }
         int[] sortedArray = array.clone();
         for (int i = 0; i < sortedArray.length; i++) {
