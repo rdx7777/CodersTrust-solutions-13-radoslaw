@@ -3,10 +3,10 @@ package pl.coderstrust.sort;
 public class SelectionSort {
 
     public static int[] sort(int[] array) {
-        int[] sortedArray = array.clone();
-        if (sortedArray.length == 0) {
-            throw new NullPointerException("Passed array can not be empty.");
+        if (array == null) {
+            throw new IllegalArgumentException("Passed array can not be null.");
         }
+        int[] sortedArray = array.clone();
         for (int i = 0; i < sortedArray.length; i++) {
             int minimalElementPosition = i;
             for (int j = i + 1; j < sortedArray.length; j++) {
