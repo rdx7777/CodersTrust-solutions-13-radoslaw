@@ -1,6 +1,9 @@
 package pl.coderstrust.sieve;
 
 public class SieveOfEratosthenes {
+
+    public static final int NON_PRIME_MARKER = 0;
+
     public static int[] sieve(int maximumNumber) {
         if (maximumNumber < 2) {
             return new int[0];
@@ -10,8 +13,8 @@ public class SieveOfEratosthenes {
         return extractPrimesNumbers(array);
     }
 
-    private static int[] createInitialArray(int maximumNumber) {
-        int[] array = new int[maximumNumber];
+    private static int[] createInitialArray(int size) {
+        int[] array = new int[size];
         for (int i = 0; i < array.length; i++) {
             array[i] = i;
         }
@@ -20,29 +23,31 @@ public class SieveOfEratosthenes {
 
     private static void markNonePrimeNumbers(int[] array) {
         for (int i = 2; i < array.length; i++) {
-            for (int j = i * 2; j < array.length; j += i) {
-                array[j] = 0;
+            if (array[i] != NON_PRIME_MARKER) {
+                for (int j = i * 2; j < array.length; j += i) {
+                    array[j] = NON_PRIME_MARKER;
+                }
             }
         }
     }
 
     private static int[] extractPrimesNumbers(int[] array) {
         int numberOfPrimes = getCountOfPrimeNumbers(array);
-        int[] arrayOfPrimes = new int[numberOfPrimes];
-        int indexOfArrayOfPrimes = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > 1) {
-                arrayOfPrimes[indexOfArrayOfPrimes] = array[i];
-                indexOfArrayOfPrimes++;
+        int[] primesArray = new int[numberOfPrimes];
+        int primesArrayIndex = 0;
+        for (int i = 2; i < array.length; i++) {
+            if (array[i] != NON_PRIME_MARKER) {
+                primesArray[primesArrayIndex] = array[i];
+                primesArrayIndex++;
             }
         }
-        return arrayOfPrimes;
+        return primesArray;
     }
 
     private static int getCountOfPrimeNumbers(int[] array) {
         int numberOfPrimes = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > 1) {
+        for (int i = 2; i < array.length; i++) {
+            if (array[i] != NON_PRIME_MARKER) {
                 numberOfPrimes++;
             }
         }
