@@ -3,6 +3,7 @@ package pl.coderstrust.fibonacci;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -12,36 +13,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class FibonacciIterativeTest {
 
     @ParameterizedTest
-    @MethodSource("dataForTests")
+    @MethodSource("fibonacciArguments")
     void shouldReturnCorrectValue(int fibonacciNumberInOrder, long expected) {
         assertThat(FibonacciIterative.fibonacci(fibonacciNumberInOrder)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> dataForTests() {
-        int firstNumber = 0;
-        long firstExpected = 0L;
-        int secondNumber = 1;
-        long secondExpected = 1L;
-        int thirdNumber = 2;
-        long thirdExpected = 1L;
-        int fourthNumber = 5;
-        long fourthExpected = 5L;
-        int fifthNumber = 10;
-        long fifthExpected = 55L;
-        int sixthNumber = 19;
-        long sixthExpected = 4181L;
-        return Stream.of(Arguments.of(firstNumber, firstExpected), Arguments.of(secondNumber, secondExpected),
-                Arguments.of(thirdNumber, thirdExpected), Arguments.of(fourthNumber, fourthExpected),
-                Arguments.of(fifthNumber, fifthExpected), Arguments.of(sixthNumber, sixthExpected));
+    static Stream<Arguments> fibonacciArguments() {
+        return Stream.of(
+                Arguments.of(0, 0L),
+                Arguments.of(1, 1L),
+                Arguments.of(2, 1L),
+                Arguments.of(5, 5L),
+                Arguments.of(10, 55L),
+                Arguments.of(19, 4181L)
+        );
     }
 
     @ParameterizedTest
-    @MethodSource("dataForThrowExceptionTests")
+    @ValueSource(ints = {-1, -20, -123})
     void shouldThrowExceptionForInvalidArgument(int fibonacciNumberInOrder) {
         assertThrows(IllegalArgumentException.class, () -> FibonacciIterative.fibonacci(fibonacciNumberInOrder));
-    }
-
-    static Stream<Arguments> dataForThrowExceptionTests() {
-        return Stream.of(Arguments.of(-1), Arguments.of(-20), Arguments.of(-123));
     }
 }
