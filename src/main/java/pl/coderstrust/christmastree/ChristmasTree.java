@@ -1,12 +1,15 @@
 package pl.coderstrust.christmastree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChristmasTree {
 
-    public static void main(String[] args) {
-        printChristmasTree(8);
-    }
-
-    public static void printChristmasTree(int size) {
+    public static List<String> printChristmasTree(int size) {
+        if (size < 3) {
+            throw new IllegalArgumentException("Christmas Tree height cannot be lower than three.");
+        }
+        List<String> result = new ArrayList<>();
         int width = 2 * size - 1;
         String space = " ";
         String asterisk = "*";
@@ -20,7 +23,7 @@ public class ChristmasTree {
             for (int j = 0; j < (2 * i + 1); j++) {
                 christmasTree.append(asterisk);
             }
-            System.out.println(christmasTree);
+            result.add(christmasTree.toString());
         }
         // trunk
         christmasTree.setLength(0);
@@ -28,6 +31,7 @@ public class ChristmasTree {
             christmasTree.append(space);
         }
         christmasTree.append(asterisk);
-        System.out.println(christmasTree);
+        result.add(christmasTree.toString());
+        return result;
     }
 }
