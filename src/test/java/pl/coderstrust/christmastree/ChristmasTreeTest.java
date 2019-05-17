@@ -16,7 +16,7 @@ class ChristmasTreeTest {
 
     @ParameterizedTest
     @MethodSource("christmasTreeArguments")
-    void shouldPrint(int size, List<String> expected) {
+    void shouldReturnCorrectChristmasTree(int size, List<String> expected) {
         assertThat(ChristmasTree.getChristmasTree(size)).isEqualTo(expected);
     }
 
