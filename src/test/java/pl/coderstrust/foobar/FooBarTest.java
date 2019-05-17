@@ -31,8 +31,8 @@ class FooBarTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-2, -5, -33})
-    void shouldThrowExceptionForInvalidArgument(int size) {
-        assertThrows(IllegalArgumentException.class, () -> FooBar.getFooBar(size));
+    @ValueSource(ints = {-33, -5, -2})
+    void shouldThrowExceptionForInvalidArgument(int number) {
+        assertThrows(IllegalArgumentException.class, () -> FooBar.getFooBar(number));
     }
 }
