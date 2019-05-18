@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiplicationTableTest {
 
     @ParameterizedTest
     @MethodSource("multiplicationTableArguments")
     void testPrintMultiplicationTable(int size, List<String> expected) {
-        assertThat(MultiplicationTable.printMultiplicationTable(size)).isEqualTo(expected);
+        assertThat(MultiplicationTable.getMultiplicationTable(size)).isEqualTo(expected);
     }
 
     static Stream<Arguments> multiplicationTableArguments() {
@@ -49,13 +49,14 @@ class MultiplicationTableTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -3, -15})
     void shouldThrowExceptionForInvalidArgument(int size) {
-        assertThrows(IllegalArgumentException.class, () -> MultiplicationTable.printMultiplicationTable(size));
+        assertThatThrownBy(() -> { MultiplicationTable.getMultiplicationTable(size); })
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
     @MethodSource("multiplicationTableUsingTwoDimensionalArrayArguments")
     void testPrintMultiplicationTableUsingTwoDimensionalArray(int size, int[][] expected) {
-        assertThat(MultiplicationTable.printMultiplicationTableUsingTwoDimensionalArray(size)).isEqualTo(expected);
+        assertThat(MultiplicationTable.getMultiplicationTableUsingTwoDimensionalArray(size)).isEqualTo(expected);
     }
 
     static Stream<Arguments> multiplicationTableUsingTwoDimensionalArrayArguments() {
@@ -70,6 +71,7 @@ class MultiplicationTableTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -3, -15})
     void shouldThrowExceptionForInvalidArgumentInMethodUsingTwoDimensionalArray(int size) {
-        assertThrows(IllegalArgumentException.class, () -> MultiplicationTable.printMultiplicationTableUsingTwoDimensionalArray(size));
+        assertThatThrownBy(() -> { MultiplicationTable.getMultiplicationTableUsingTwoDimensionalArray(size); })
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

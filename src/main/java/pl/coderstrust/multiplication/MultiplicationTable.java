@@ -5,31 +5,7 @@ import java.util.List;
 
 public class MultiplicationTable {
 
-    public static void main(String[] args) {
-        List<String> multiplicationTable = printMultiplicationTable(3);
-        for (int i = 0; i < multiplicationTable.size(); i++) {
-            System.out.println(multiplicationTable.get(i));
-        }
-//        List<String> multiplicationTable2 = printMultiplicationTable(12);
-//        for (int i = 0; i < multiplicationTable2.size(); i++) {
-//            System.out.println(multiplicationTable2.get(i));
-//        }
-//        List<String> multiplicationTable3 = printMultiplicationTable(32);
-//        for (int i = 0; i < multiplicationTable3.size(); i++) {
-//            System.out.println(multiplicationTable3.get(i));
-//        }
-        System.out.println();
-        int size = 6;
-        int[][] multiplicationArray = printMultiplicationTableUsingTwoDimensionalArray(size);
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(multiplicationArray[i][j] + "  ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static List<String> printMultiplicationTable(int size) {
+    public static List<String> getMultiplicationTable(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("Multiplication table can be printed only for numbers greater than zero.");
         }
@@ -63,7 +39,7 @@ public class MultiplicationTable {
         return "%" + width + "s";
     }
 
-    public static int[][] printMultiplicationTableUsingTwoDimensionalArray(int size) {
+    public static int[][] getMultiplicationTableUsingTwoDimensionalArray(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("Multiplication table can be printed only for numbers greater than zero.");
         }
