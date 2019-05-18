@@ -49,7 +49,7 @@ class MultiplicationTableTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -3, -15})
     void shouldThrowExceptionForInvalidArgument(int size) {
-        assertThatThrownBy(() -> { MultiplicationTable.getMultiplicationTable(size); })
+        assertThatThrownBy(() -> MultiplicationTable.getMultiplicationTable(size))
                 .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -71,7 +71,7 @@ class MultiplicationTableTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -3, -15})
     void shouldThrowExceptionForInvalidArgumentInMethodUsingTwoDimensionalArray(int size) {
-        assertThatThrownBy(() -> { MultiplicationTable.getMultiplicationTableUsingTwoDimensionalArray(size); })
+        assertThatThrownBy(() -> MultiplicationTable.getMultiplicationTableUsingTwoDimensionalArray(size))
                 .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
