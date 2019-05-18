@@ -12,19 +12,15 @@ public class FooBar {
         List<String> result = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i <= number; i++) {
-            stringBuilder.setLength(0);
-            stringBuilder.append(i);
+            stringBuilder.append(i).append(" ");
             if (i % 3 == 0) {
-                stringBuilder.append(" ").append("Foo");
+                stringBuilder.append("Foo");
             }
             if (i % 5 == 0) {
-                if (stringBuilder.toString().contains("o")) {
-                    stringBuilder.append("Bar");
-                } else {
-                    stringBuilder.append(" ").append("Bar");
-                }
+                stringBuilder.append("Bar");
             }
             result.add(stringBuilder.toString());
+            stringBuilder.setLength(0);
         }
         return result;
     }

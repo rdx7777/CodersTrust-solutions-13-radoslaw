@@ -21,9 +21,9 @@ class FooBarTest {
     }
 
     static Stream<Arguments> fooBarArguments() {
-        List<String> expectedFor3 = Arrays.asList("0 FooBar", "1", "2", "3 Foo");
-        List<String> expectedFor16 = Arrays.asList("0 FooBar", "1", "2", "3 Foo", "4", "5 Bar", "6 Foo", "7", "8",
-                "9 Foo", "10 Bar", "11", "12 Foo", "13", "14", "15 FooBar", "16");
+        List<String> expectedFor3 = Arrays.asList("0 FooBar", "1 ", "2 ", "3 Foo");
+        List<String> expectedFor16 = Arrays.asList("0 FooBar", "1 ", "2 ", "3 Foo", "4 ", "5 Bar", "6 Foo", "7 ", "8 ",
+                "9 Foo", "10 Bar", "11 ", "12 Foo", "13 ", "14 ", "15 FooBar", "16 ");
         return Stream.of(
                 Arguments.of(3, expectedFor3),
                 Arguments.of(16, expectedFor16)
