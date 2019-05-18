@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FooBarTest {
 
@@ -33,6 +33,6 @@ class FooBarTest {
     @ParameterizedTest
     @ValueSource(ints = {-33, -5, -2})
     void shouldThrowExceptionForInvalidArgument(int number) {
-        assertThrows(IllegalArgumentException.class, () -> FooBar.getFooBar(number));
+        assertThatThrownBy(() -> FooBar.getFooBar(number)).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
