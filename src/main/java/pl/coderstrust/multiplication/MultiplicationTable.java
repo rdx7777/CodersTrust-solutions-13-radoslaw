@@ -1,30 +1,32 @@
 package pl.coderstrust.multiplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MultiplicationTable {
 
-    public static void main(String[] args) {
-        printMultiplicationTable(3);
-        System.out.println();
-        printMultiplicationTable(12);
-        System.out.println();
-        printMultiplicationTable(32);
-    }
-
-    public static void printMultiplicationTable(int size) {
+    public static List<String> getMultiplicationTable(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Multiplication table can be printed only for numbers greater than zero.");
+        }
+        List<String> result = new ArrayList<>();
+        StringBuilder multiplicationTable = new StringBuilder();
         String singleNumberPattern = getFormattingPatternForSingleNumber(size);
         String multiplicationPattern = getFormattingPatternForMultiplication(size);
-        System.out.printf(singleNumberPattern, "");
+        multiplicationTable.append(String.format(singleNumberPattern, ""));
         for (int i = 1; i <= size; i++) {
-            System.out.printf(multiplicationPattern, i);
+            multiplicationTable.append(String.format(multiplicationPattern, i));
         }
-        System.out.println();
+        result.add(multiplicationTable.toString());
         for (int i = 1; i <= size; i++) {
-            System.out.printf(singleNumberPattern, i);
+            multiplicationTable.setLength(0);
+            multiplicationTable.append(String.format(singleNumberPattern, i));
             for (int j = 1; j <= size; j++) {
-                System.out.printf(multiplicationPattern, i * j);
+                multiplicationTable.append(String.format(multiplicationPattern, i * j));
             }
-            System.out.println();
+            result.add(multiplicationTable.toString());
         }
+        return result;
     }
 
     private static String getFormattingPatternForSingleNumber(int number) {
@@ -35,5 +37,18 @@ public class MultiplicationTable {
     private static String getFormattingPatternForMultiplication(int number) {
         int width = String.valueOf(number * number).length() + 1;
         return "%" + width + "s";
+    }
+
+    public static int[][] getMultiplicationTableUsingTwoDimensionalArray(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Multiplication table can be printed only for numbers greater than zero.");
+        }
+        int[][] resultArray = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                resultArray[i][j] = (i + 1) * (j + 1);
+            }
+        }
+        return resultArray;
     }
 }
