@@ -13,7 +13,7 @@ public class HanoiTowers {
     public static void hanoiRunner(int numberOfDiscs) {
         HanoiTowers towers = new HanoiTowers();
         towerC.clear();
-        towers.fillListAWithNumbers(numberOfDiscs);
+        towers.fillTowerAWithNumbers(numberOfDiscs);
         towers.printState();
         towers.hanoi(numberOfDiscs, towerA, towerB, towerC);
     }
@@ -27,7 +27,7 @@ public class HanoiTowers {
         }
     }
 
-    private void fillListAWithNumbers(int numberOfDiscs) {
+    private void fillTowerAWithNumbers(int numberOfDiscs) {
         for (int i = numberOfDiscs; i > 0; i--) {
             towerA.push(i);
         }

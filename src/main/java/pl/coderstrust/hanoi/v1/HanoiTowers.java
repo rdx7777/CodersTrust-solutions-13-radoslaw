@@ -21,17 +21,13 @@ public class HanoiTowers {
         }
     }
 
-    private HanoiTowers() {}
-
-    public static void hanoiRunner(int numberOfDiscs, Stack<Integer> source, Stack<Integer> auxiliary, Stack<Integer> target) {
-        HanoiTowers towers = new HanoiTowers();
+    public static void hanoiRunner(Stack<Integer> source, Stack<Integer> auxiliary, Stack<Integer> target) {
         HanoiState state = new HanoiState(source, auxiliary, target);
-        towers.fillListAWithNumbers(numberOfDiscs, source);
         state.printState();
-        towers.hanoi(source.size(), source, auxiliary, target, state);
+        hanoi(source.size(), source, auxiliary, target, state);
     }
 
-    private void hanoi(int numberOfDiscs, Stack<Integer> source, Stack<Integer> auxiliary, Stack<Integer> target, HanoiState hanoiState) {
+    private static void hanoi(int numberOfDiscs, Stack<Integer> source, Stack<Integer> auxiliary, Stack<Integer> target, HanoiState hanoiState) {
         if (numberOfDiscs > 0) {
             hanoi(numberOfDiscs - 1, source, target, auxiliary, hanoiState);
             target.push(source.pop());
@@ -40,7 +36,7 @@ public class HanoiTowers {
         }
     }
 
-    private void fillListAWithNumbers(int numberOfDiscs, Stack<Integer> towerA) {
+    public static void fillTowerAWithNumbers(int numberOfDiscs, Stack<Integer> towerA) {
         for (int i = numberOfDiscs; i > 0; i--) {
             towerA.push(i);
         }
