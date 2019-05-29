@@ -37,9 +37,9 @@ public class Hoare {
         return (leftIndex + (rightIndex - leftIndex) / 2);
     }
 
-    private static void swapElementsInArray(int[] array, int indexOfFirstElement, int indexOfSecondElement) {
-        int temp = array[indexOfSecondElement];
-        array[indexOfSecondElement] = array[indexOfFirstElement];
-        array[indexOfFirstElement] = temp;
+    private static void swapElementsInArray(int[] array, int a, int b) {
+        int temp = array[b];
+        array[b] = array[a];
+        array[a] = temp;
     }
 }
