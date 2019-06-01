@@ -4,22 +4,27 @@ import java.util.*;
 
 public class FibonacciChecker {
 
-    private static Map<Long, Boolean> checkedNumbers = new HashMap<>();
+    private static Map<Long, Boolean> cache = new HashMap<>();
 
     public static boolean isFibonacciNumber(long number) {
-        if (number < 0 || number > 2000000000) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Fibonacci number cannot be lower than zero.");
+        }
+        if (number > 2000000000) {
             throw new IllegalArgumentException("Number out of supported range.");
         }
-        if (checkedNumbers.containsKey(number)) {
-            return checkedNumbers.get(number);
+        if (cache.containsKey(number)) {
+            return cache.get(number);
         }
-        double sqrtPlus4 = Math.sqrt(5 * number * number + 4);
-        double sqrtMinus4 = Math.sqrt(5 * number * number - 4);
-        if (sqrtPlus4 == Math.round(sqrtPlus4) || sqrtMinus4 == Math.round(sqrtMinus4)) {
-            checkedNumbers.put(number, true);
-            return true;
-        }
-        checkedNumbers.put(number, false);
-        return false;
+        long formula1 = 5 * number * number + 4;
+        long formula2 = 5 * number * number - 4;
+        boolean isFibonacciNumber = isPerfectSquare(formula1) || isPerfectSquare(formula2);
+        cache.put(number, isFibonacciNumber);
+        return isFibonacciNumber;
+    }
+
+    public static boolean isPerfectSquare(long number) {
+        double squareRootOfNumber = Math.sqrt(number);
+        return squareRootOfNumber == Math.round(squareRootOfNumber);
     }
 }
