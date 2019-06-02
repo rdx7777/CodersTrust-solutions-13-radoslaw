@@ -7,6 +7,9 @@ public class Trapezoid implements Figures {
     private double h;
 
     public Trapezoid(double a, double b, double h) {
+        if (a < 0 || b < 0 || h < 0) {
+            throw new IllegalArgumentException("All values must be positive.");
+        }
         this.a = a;
         this.b = b;
         this.h = h;
@@ -22,7 +25,21 @@ public class Trapezoid implements Figures {
     }
 
     public void setA(double a) {
+        if (a < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.a = a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        if (b < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
+        this.b = b;
     }
 
     public double getH() {
@@ -30,6 +47,9 @@ public class Trapezoid implements Figures {
     }
 
     public void setH(double h) {
+        if (h < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.h = h;
     }
 }

@@ -6,11 +6,17 @@ public class Triangle implements Figures {
     private double h;
 
     public Triangle(double a, double h) {
+        if (a < 0 || h < 0) {
+            throw new IllegalArgumentException("All values must be positive.");
+        }
         this.a = a;
         this.h = h;
     }
 
     public Triangle(double a) {
+        if (a < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.a = a;
     }
 
@@ -27,6 +33,9 @@ public class Triangle implements Figures {
     }
 
     public void setA(double a) {
+        if (a < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.a = a;
     }
 
@@ -35,6 +44,9 @@ public class Triangle implements Figures {
     }
 
     public void setH(double h) {
+        if (h < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.h = h;
     }
 }

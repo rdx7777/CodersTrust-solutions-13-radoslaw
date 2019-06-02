@@ -5,6 +5,9 @@ public class Circle implements Figures {
     private double r;
 
     public Circle(double r) {
+        if (r < 0) {
+            throw new IllegalArgumentException("Radius must be positive.");
+        }
         this.r = r;
     }
 
@@ -18,6 +21,9 @@ public class Circle implements Figures {
     }
 
     public void setR(double r) {
+        if (r < 0) {
+            throw new IllegalArgumentException("Radius must be positive.");
+        }
         this.r = r;
     }
 }

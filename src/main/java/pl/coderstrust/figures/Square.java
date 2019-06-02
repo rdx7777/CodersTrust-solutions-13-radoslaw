@@ -5,6 +5,9 @@ public class Square implements Figures {
     private double a;
 
     public Square(double a) {
+        if (a < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.a = a;
     }
 
@@ -18,6 +21,9 @@ public class Square implements Figures {
     }
 
     public void setA(double a) {
+        if (a < 0) {
+            throw new IllegalArgumentException("Value must be positive.");
+        }
         this.a = a;
     }
 }
