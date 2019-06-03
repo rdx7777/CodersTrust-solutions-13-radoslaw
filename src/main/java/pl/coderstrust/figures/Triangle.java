@@ -1,6 +1,6 @@
 package pl.coderstrust.figures;
 
-public class Triangle implements Figures {
+public class Triangle implements Figure {
 
     private double a;
     private double h;

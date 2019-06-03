@@ -1,6 +1,6 @@
 package pl.coderstrust.figures;
 
-public class Circle implements Figures {
+public class Circle implements Figure {
 
     private double r;
 
@@ -13,7 +13,7 @@ public class Circle implements Figures {
 
     @Override
     public double calculateArea() {
-        return 3.14 * r * r;
+        return Math.PI * r * r;
     }
 
     public double getR() {

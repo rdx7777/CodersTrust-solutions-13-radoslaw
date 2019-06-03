@@ -13,14 +13,14 @@ class FiguresTest {
 
     @ParameterizedTest
     @MethodSource("figuresArguments")
-    void shouldCalculateFiguresArea(Figures testFigure, double expectedArea) {
+    void shouldCalculateFiguresArea(Figure testFigure, double expectedArea) {
         assertThat(testFigure.calculateArea()).isCloseTo(expectedArea, Offset.offset(0.001));
 
     }
 
     static Stream<Arguments> figuresArguments() {
         return Stream.of(
-                Arguments.of(new Circle(2.5), 19.625),
+                Arguments.of(new Circle(2.5), 19.635),
                 Arguments.of(new Rectangle(2.5, 4), 10),
                 Arguments.of(new Rectangle(3.45, 2.81), 9.695),
                 Arguments.of(new Square(3.55), 12.602),

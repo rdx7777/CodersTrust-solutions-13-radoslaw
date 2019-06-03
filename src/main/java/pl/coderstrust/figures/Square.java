@@ -1,6 +1,6 @@
 package pl.coderstrust.figures;
 
-public class Square implements Figures {
+public class Square implements Figure {
 
     private double a;
 

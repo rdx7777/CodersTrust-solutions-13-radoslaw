@@ -1,6 +1,6 @@
 package pl.coderstrust.figures;
 
-public class Trapezoid implements Figures {
+public class Trapezoid implements Figure {
 
     private double a;
     private double b;

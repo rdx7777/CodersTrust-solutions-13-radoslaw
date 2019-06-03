@@ -1,6 +1,6 @@
 package pl.coderstrust.figures;
 
-public class Rectangle implements Figures {
+public class Rectangle implements Figure {
 
     private double a;
     private double b;
