@@ -1,36 +1,32 @@
 package pl.coderstrust.numbers;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
 public class FileProcessor {
 
-    public List<String> readLinesFromFile(String fileName) throws Exception {
-        File file = new File(fileName);
+    public List<String> readLinesFromFile(String filePath) throws Exception {
         List<String> linesFromFile = new ArrayList<>();
-        try (Stream<String> fileLines = Files.lines(Paths.get(file.getPath()))) {
-            fileLines.forEach(linesFromFile::add);
-        } catch (IOException e) {
-            throw new Exception();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                linesFromFile.add(scanner.nextLine());
+            }
         }
         return linesFromFile;
     }
 
-    public void writeLinesToFile(List<String> resultLines, String resultFileName) throws Exception {
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(resultFileName, true), "UTF-8"))) {
-            for (String line : resultLines) {
-                if (line != null) {
-                    writer.append(line);
-                    ((BufferedWriter) writer).newLine();
+    public void writeLinesToFile(List<String> lines, String filePath) throws Exception {
+        if (lines.equals(null) || filePath.equals("")) {
+            throw new NullPointerException("Passed arguments cannot be null.");
+        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            for (String line : lines) {
+                if (line.length() > 0) {
+                    writer.println(line);
                 }
             }
-        } catch (IOException e) {
-            throw new Exception();
         }
     }
 }
