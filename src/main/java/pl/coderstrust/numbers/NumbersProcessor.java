@@ -1,30 +1,27 @@
 package pl.coderstrust.numbers;
 
-import java.util.regex.Pattern;
+import java.util.Scanner;
 
 public class NumbersProcessor {
 
     public String processLine(String line) {
-        StringBuilder processedLine = new StringBuilder();
-        processedLine.setLength(0);
-        if (isLineValid(line)) {
+        if (!LineValidator.isLineValid(line)) {
+            return "";
+        }
+        try (Scanner scanner = new Scanner(line)) {
+            StringBuilder processedLine = new StringBuilder();
             int sum = 0;
-            String splitString[] = line.split(" +");
-            for (int i = 0; i < splitString.length; i++) {
-                sum = sum + Integer.valueOf(splitString[i]);
-                if (i != splitString.length - 1) {
-                    processedLine.append(splitString[i]).append("+");
-                } else {
-                    processedLine.append(splitString[i]);
+            int number;
+            while (scanner.hasNextInt()) {
+                number = scanner.nextInt();
+                processedLine.append(number);
+                sum += number;
+                if (scanner.hasNextInt()) {
+                    processedLine.append("+");
                 }
             }
             processedLine.append("=").append(sum);
+            return processedLine.toString();
         }
-        return processedLine.toString();
-    }
-
-    private static boolean isLineValid(String line) {
-        Pattern pattern = Pattern.compile("^[\\d\\s]+");
-        return pattern.matcher(line).matches();
     }
 }

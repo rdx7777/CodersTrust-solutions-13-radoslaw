@@ -7,7 +7,10 @@ import java.util.Scanner;
 
 public class FileProcessor {
 
-    public List<String> readLinesFromFile(String filePath) throws Exception {
+    public List<String> readLinesFromFile(String filePath) throws FileNotFoundException {
+        if (filePath == null) {
+            throw new IllegalArgumentException("File path cannot be null.");
+        }
         List<String> linesFromFile = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
@@ -17,15 +20,16 @@ public class FileProcessor {
         return linesFromFile;
     }
 
-    public void writeLinesToFile(List<String> lines, String filePath) throws Exception {
-        if (lines.equals(null) || filePath.equals("")) {
-            throw new NullPointerException("Passed arguments cannot be null.");
+    public void writeLinesToFile(List<String> lines, String filePath) throws IOException {
+        if (lines == null) {
+            throw new IllegalArgumentException("Lines cannot be null.");
+        }
+        if (filePath == null) {
+            throw new IllegalArgumentException("File path cannot be null.");
         }
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
             for (String line : lines) {
-                if (line.length() > 0) {
-                    writer.println(line);
-                }
+                writer.println(line);
             }
         }
     }

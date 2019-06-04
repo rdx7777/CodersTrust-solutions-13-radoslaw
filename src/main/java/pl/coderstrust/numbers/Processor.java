@@ -1,5 +1,6 @@
 package pl.coderstrust.numbers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,23 +18,28 @@ public class Processor {
 
     public Processor(NumbersProcessor numbersProcessor, FileProcessor fileProcessor) {
         if (numbersProcessor == null) {
-            throw new NullPointerException("Passed argument must be declared.");
+            throw new IllegalArgumentException("Numbers processor cannot be null.");
         }
-        if (fileProcessor.equals(null)) {
-            throw new NullPointerException("Passed argument must be declared.");
+        if (fileProcessor == null) {
+            throw new IllegalArgumentException("Files processor cannot be null.");
         }
         this.numbersProcessor = numbersProcessor;
         this.fileProcessor = fileProcessor;
     }
 
-    public void process(String inputFilePath, String outputFilePath) throws Exception {
-        if (inputFilePath.equals("") || outputFilePath.equals("")) {
-            throw new IllegalArgumentException("Passed file paths cannot be empty");
+    public void process(String inputFilePath, String outputFilePath) throws IOException {
+        if (inputFilePath == null) {
+            throw new IllegalArgumentException("Input file path cannot be null.");
+        }
+        if (outputFilePath == null) {
+            throw new IllegalArgumentException("Output file path cannot be null.");
         }
         List<String> linesFromFile = fileProcessor.readLinesFromFile(inputFilePath);
         List<String> resultLines = new ArrayList<>();
         for (String line : linesFromFile) {
-            resultLines.add(numbersProcessor.processLine(line));
+            if (LineValidator.isLineValid(line)) {
+                resultLines.add(numbersProcessor.processLine(line));
+            }
         }
         fileProcessor.writeLinesToFile(resultLines, outputFilePath);
     }
