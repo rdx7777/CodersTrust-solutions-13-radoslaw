@@ -33,8 +33,10 @@ class ProcessorTest {
         doReturn("43+12+2+4+0+1=62").when(numbersProcessor).processLine("43 12 2 4 0 1");
         doReturn("1+1+5=7").when(numbersProcessor).processLine("1 1 5");
         List<String> resultLines = Arrays.asList("43+12+2+4+0+1=62", "1+1+5=7");
+
         // when
         processor.process(inputFilePath, outputFilePath);
+
         // then
         verify(fileProcessor).readLinesFromFile(inputFilePath);
         verify(fileProcessor).writeLinesToFile(resultLines, outputFilePath);

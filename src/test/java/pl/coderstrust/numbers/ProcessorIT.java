@@ -12,16 +12,15 @@ public class ProcessorIT {
 
     @Test
     public void processorIntegrationTest() throws IOException {
-
         // given
         FileProcessor fileProcessor = new FileProcessor();
         NumbersProcessor numbersProcessor = new NumbersProcessor();
         Processor processor = new Processor(numbersProcessor, fileProcessor);
-
-        // when
         String inputFilePath = "src/test/resources/input.txt";
         String outputFilePath = "src/test/resources/output.txt";
         String expectedFilePath = "src/test/resources/expected.txt";
+
+        // when
         processor.process(inputFilePath, outputFilePath);
         byte[] outputFileContent = Files.readAllBytes(Paths.get(outputFilePath));
         byte[] expectedFileContent = Files.readAllBytes(Paths.get(expectedFilePath));
