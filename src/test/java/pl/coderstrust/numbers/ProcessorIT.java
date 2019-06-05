@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 public class ProcessorIT {
 
     @Test
-    public void processorIntegrationTest() throws IOException {
+    public void shouldProcessProvidedInputFileAndSaveResultToOutputFile() throws IOException {
         // given
         FileProcessor fileProcessor = new FileProcessor();
         NumbersProcessor numbersProcessor = new NumbersProcessor();
