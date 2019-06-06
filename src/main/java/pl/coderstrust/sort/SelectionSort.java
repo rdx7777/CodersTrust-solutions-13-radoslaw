@@ -1,8 +1,9 @@
 package pl.coderstrust.sort;
 
-public class SelectionSort {
+public class SelectionSort implements SortingMethod {
 
-    public static int[] sort(int[] array) {
+    @Override
+    public int[] sort(int[] array) {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
@@ -14,14 +15,8 @@ public class SelectionSort {
                     minimalElementPosition = j;
                 }
             }
-            swapElementsInArray(sortedArray, minimalElementPosition, i);
+            ArrayUtils.swapElementsInArray(sortedArray, minimalElementPosition, i);
         }
         return sortedArray;
-    }
-
-    private static void swapElementsInArray(int[] array, int indexOfFirstElement, int indexOfSecondElement) {
-        int temp = array[indexOfSecondElement];
-        array[indexOfSecondElement] = array[indexOfFirstElement];
-        array[indexOfFirstElement] = temp;
     }
 }

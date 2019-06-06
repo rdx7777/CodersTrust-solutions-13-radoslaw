@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 public interface SortingMethod {
 

@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 public class MergeSort implements SortingMethod {
 
@@ -7,8 +7,7 @@ public class MergeSort implements SortingMethod {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
-        int[] sortedArray = mergeSort(array, array.length);
-        return sortedArray;
+        return mergeSort(array, array.length);
     }
 
     private static int[] mergeSort(int[] array, int index) {

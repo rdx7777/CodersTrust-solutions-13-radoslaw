@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +14,6 @@ public class CollectionsSort implements SortingMethod {
         }
         List<Integer> listToSort = Arrays.stream(array.clone()).boxed().collect(Collectors.toList());
         Collections.sort(listToSort);
-        int[] sortedArray = listToSort.stream().mapToInt(i -> i).toArray();
-        return sortedArray;
+        return listToSort.stream().mapToInt(i -> i).toArray();
     }
 }

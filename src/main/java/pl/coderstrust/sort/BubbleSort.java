@@ -1,8 +1,9 @@
 package pl.coderstrust.sort;
 
-public class BubbleSort {
+public class BubbleSort implements SortingMethod {
 
-    public static int[] sort(int[] array) {
+    @Override
+    public int[] sort(int[] array) {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
@@ -10,16 +11,10 @@ public class BubbleSort {
         for (int i = 0; i < sortedArray.length; i++) {
             for (int j = 1; j < sortedArray.length; j++) {
                 if (sortedArray[j - 1] > sortedArray[j]) {
-                    swapElementsInArray(sortedArray, j - 1, j);
+                    ArrayUtils.swapElementsInArray(sortedArray, j - 1, j);
                 }
             }
         }
         return sortedArray;
-    }
-
-    private static void swapElementsInArray(int[] array, int indexOfFirstElement, int indexOfSecondElement) {
-        int temp = array[indexOfSecondElement];
-        array[indexOfSecondElement] = array[indexOfFirstElement];
-        array[indexOfFirstElement] = temp;
     }
 }

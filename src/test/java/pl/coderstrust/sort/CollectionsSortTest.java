@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 class CollectionsSortTest extends SortingTestBase {
 

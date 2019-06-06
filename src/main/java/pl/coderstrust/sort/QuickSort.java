@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 public class QuickSort implements SortingMethod {
 
@@ -7,48 +7,41 @@ public class QuickSort implements SortingMethod {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
-        int[] sortedArray = hoareQuickSort(array, 0, array.length - 1);
-        return sortedArray;
+        return hoareQuickSort(array, 0, array.length - 1);
     }
 
     private static int[] hoareQuickSort(int[] array, int leftIndex, int rightIndex) {
         if (leftIndex < rightIndex) {
-            int p = arrayPartition(array, leftIndex, rightIndex);
-            hoareQuickSort(array, leftIndex, p);
-            hoareQuickSort(array, p + 1, rightIndex);
+            int partitionIndex = arrayPartition(array, leftIndex, rightIndex);
+            hoareQuickSort(array, leftIndex, partitionIndex);
+            hoareQuickSort(array, partitionIndex + 1, rightIndex);
         }
         return array;
     }
 
     private static int arrayPartition(int[] array, int leftIndex, int rightIndex) {
         int pivotIndex = setPivotIndex(leftIndex, rightIndex);
-        int pivot = array[pivotIndex];
+        int pivotValue = array[pivotIndex];
         int i = leftIndex - 1;
         int j = rightIndex + 1;
         while (true) {
             do {
                 i++;
             }
-            while (array[i] < pivot);
+            while (array[i] < pivotValue);
             do {
                 j--;
             }
-            while (array[j] > pivot);
+            while (array[j] > pivotValue);
             if (i >= j) {
                 return j;
             } else {
-                swapElementsInArray(array, i, j);
+                ArrayUtils.swapElementsInArray(array, i, j);
             }
         }
     }
 
     private static int setPivotIndex(int leftIndex, int rightIndex) {
         return (leftIndex + (rightIndex - leftIndex) / 2);
-    }
-
-    private static void swapElementsInArray(int[] array, int a, int b) {
-        int temp = array[b];
-        array[b] = array[a];
-        array[a] = temp;
     }
 }

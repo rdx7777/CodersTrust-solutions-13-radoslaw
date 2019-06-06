@@ -1,4 +1,4 @@
-package pl.coderstrust.comparesorting;
+package pl.coderstrust.sort;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,11 +20,13 @@ public abstract class SortingTestBase {
         int[] given = {5, 4, 3, 2, 1};
         int[] expected = {1, 2, 3, 4, 5};
         System.out.println("Sorting by: " + getSortingMethod().getClass());
+
         // when
         long startTime = System.nanoTime();
         int[] result = getSortingMethod().sort(given);
         long endTime = System.nanoTime();
         System.out.println(endTime - startTime);
+
         // then
         assertArrayEquals(expected, result);
     }
