@@ -7,7 +7,8 @@ public class MergeSort implements SortingMethod {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
-        return mergeSort(array, array.length);
+        int[] sortedArray = array.clone();
+        return mergeSort(sortedArray, sortedArray.length);
     }
 
     private static int[] mergeSort(int[] array, int index) {

@@ -7,7 +7,8 @@ public class QuickSort implements SortingMethod {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
-        return hoareQuickSort(array, 0, array.length - 1);
+        int[] sortedArray = array.clone();
+        return hoareQuickSort(sortedArray, 0, sortedArray.length - 1);
     }
 
     private static int[] hoareQuickSort(int[] array, int leftIndex, int rightIndex) {
