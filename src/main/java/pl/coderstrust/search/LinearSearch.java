@@ -7,9 +7,9 @@ public class LinearSearch implements SearchingMethod {
         if (array == null) {
             throw new IllegalArgumentException("Passed array cannot be null.");
         }
-        for (int index = 0; index < array.length; index++) {
-            if (array[index] == element) {
-                return index;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == element) {
+                return i;
             }
         }
         return -1;

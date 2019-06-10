@@ -1,8 +1,7 @@
 package pl.coderstrust.search;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,39 +10,69 @@ public abstract class SearchingTestBase {
 
     public abstract SearchingMethod getSearchingMethod();
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 79, 500, 3_213, 21_111, 100_000, 1_200_000, 2_345_678, 4_999_777})
-    void shouldSearch(int element) {
-        // given
-        int[] given = new int[5_000_000];
-        for (int i = 0; i < given.length; i++) {
-            given[i] = i;
+    private static int[] arrayToSearch;
+
+    @BeforeAll
+    private static void setup() {
+        arrayToSearch = new int[6_000_000];
+        for (int i = 0; i < 6_000_000; i++) {
+            arrayToSearch[i] = i;
         }
-        System.out.print("Searched element " + element + " by <<" + getSearchingMethod().getClass() + ">> found in ");
+    }
+
+    @Test
+    void shouldSearchFirstElement() {
+        // given
+        System.out.print("First element searched by <<" + getSearchingMethod().getClass() + ">> found in ");
 
         // when
         long startTime = System.nanoTime();
-        int result = getSearchingMethod().search(given, element);
+        int result = getSearchingMethod().search(arrayToSearch, 0);
         long endTime = System.nanoTime();
         System.out.println((endTime - startTime) + " nanoseconds.");
 
         // then
-        assertThat(result).isEqualTo(element);
+        assertThat(result).isEqualTo(0);
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {-5, 133, 5_555, 13_333, 99_777, 1_999_999, 4_999_999, 110_010_000})
-    void shouldReturnMinusOneWhenElementNotFound(int element) {
+    @Test
+    void shouldSearchMiddleElement() {
         // given
-        int[] given = new int[5_000_000];
-        for (int i = 0; i < given.length; i++) {
-            given[i] = i * 2;
-        }
-        System.out.print("Element " + element + " was searched by <<" + getSearchingMethod().getClass() + ">> for ");
+        System.out.print("Middle element searched by <<" + getSearchingMethod().getClass() + ">> found in ");
 
         // when
         long startTime = System.nanoTime();
-        int result = getSearchingMethod().search(given, element);
+        int result = getSearchingMethod().search(arrayToSearch, 2_999_999);
+        long endTime = System.nanoTime();
+        System.out.println((endTime - startTime) + " nanoseconds.");
+
+        // then
+        assertThat(result).isEqualTo(2_999_999);
+    }
+
+    @Test
+    void shouldSearchLastElement() {
+        // given
+        System.out.print("Last element searched by <<" + getSearchingMethod().getClass() + ">> found in ");
+
+        // when
+        long startTime = System.nanoTime();
+        int result = getSearchingMethod().search(arrayToSearch, 5_999_999);
+        long endTime = System.nanoTime();
+        System.out.println((endTime - startTime) + " nanoseconds.");
+
+        // then
+        assertThat(result).isEqualTo(5_999_999);
+    }
+
+    @Test
+    void shouldSearchNotExistingElement() {
+        // given
+        System.out.print("Not existing element was searched by <<" + getSearchingMethod().getClass() + ">> for ");
+
+        // when
+        long startTime = System.nanoTime();
+        int result = getSearchingMethod().search(arrayToSearch, 6_000_000);
         long endTime = System.nanoTime();
         System.out.println((endTime - startTime) + " nanoseconds.");
 
@@ -52,7 +81,7 @@ public abstract class SearchingTestBase {
     }
 
     @Test
-    void shouldThrowExceptionForNullAsArray() {
+    void shouldThrowExceptionForNullArray() {
         assertThrows(IllegalArgumentException.class, () -> getSearchingMethod().search(null, 1));
     }
 }
