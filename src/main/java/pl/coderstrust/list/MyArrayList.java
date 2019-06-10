@@ -13,50 +13,18 @@ public class MyArrayList<Long> implements List<Long> {
         elements = new Object[INITIAL_CAPACITY];
     }
 
-    @Override // done
+    @Override // done with test
     public int size() {
         return size;
     }
 
-    @Override // done
+    @Override // done with test
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override // done
-    public boolean contains(Object o) {
-        if (o == null) {
-            for (int i = 0; i < size; i++) {
-                if (elements[i] == null) {
-                    return true;
-                }
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (elements[i].equals(o)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Iterator<Long> iterator() {
-        return null;
-    }
-
-    @Override
-    public Object[] toArray() { // done
-        return Arrays.copyOf(elements, size);
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override // done - but... what about WRONG OBJECT TYPE ???
+    @Override // done with test
+    // what about WRONG OBJECT TYPE ???
     public boolean add(Long aLong) {
         if (size == MAXIMUM_CAPACITY) {
             return false;
@@ -68,11 +36,107 @@ public class MyArrayList<Long> implements List<Long> {
         return true;
     }
 
-    // extra added method
-    // NOT TESTED YET !!!!!!!!!!!!!!
+    // extra added method **********************************************************************************************
+    // NOT TESTED YET !!!!!!!!!!!!!! ***********************************************************************************
     public void increaseCapacity() {
         int newSize = elements.length * 2;
         elements = Arrays.copyOf(elements, newSize);
+    }
+
+    @Override // done with test
+    public boolean contains(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elements[i])) { // order matters, but WHY ?????????????????????????????????????????????????
+//                if (elements[i].equals(o)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override // done with test
+    public Object[] toArray() {
+        return Arrays.copyOf(elements, size);
+    }
+
+    @Override // done with test
+    public <T> T[] toArray(T[] a) {
+        if (a.length < size)
+            return (T[]) Arrays.copyOf(elements, size, a.getClass());
+        System.arraycopy(elements, 0, a, 0, size);
+        if (a.length > size)
+            a[size] = null;
+        return a;
+    }
+
+    @Override // done with test
+    // is't interesting - BOTH VERSION ARE WORKING --- which is better ????????????????????????????????????????
+    public void clear() {
+//        elements = new Object[INITIAL_CAPACITY];
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    @Override // done with test
+    public Long get(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be lower than 0.");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Index cannot be greater than list size");
+        }
+        return (Long) elements[index];
+    }
+
+    @Override // done
+    public int indexOf(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(elements[i])) { // order MATTERS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        if (o == null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (o.equals(elements[i])) { // order MATTERS... WHY ???????????????????????????????????????????????????
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public Iterator<Long> iterator() {
+        return null;
     }
 
     @Override
@@ -106,16 +170,6 @@ public class MyArrayList<Long> implements List<Long> {
     }
 
     @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public Long get(int index) {
-        return null;
-    }
-
-    @Override
     public Long set(int index, Long element) {
         return null;
     }
@@ -128,16 +182,6 @@ public class MyArrayList<Long> implements List<Long> {
     @Override
     public Long remove(int index) {
         return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
     }
 
     @Override
