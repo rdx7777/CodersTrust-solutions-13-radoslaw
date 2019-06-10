@@ -98,7 +98,7 @@ public class MyArrayList<Long> implements List<Long> {
         return (Long) elements[index];
     }
 
-    @Override // done
+    @Override // done with test
     public int indexOf(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++) {
@@ -116,7 +116,7 @@ public class MyArrayList<Long> implements List<Long> {
         return -1;
     }
 
-    @Override
+    @Override // done with test
     public int lastIndexOf(Object o) {
         if (o == null) {
             for (int i = size - 1; i >= 0; i--) {
@@ -134,14 +134,37 @@ public class MyArrayList<Long> implements List<Long> {
         return -1;
     }
 
+    @Override // done with test
+    public Long set(int index, Long element) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
+        }
+        Long exchangedValue = (Long) elements[index];
+        elements[index] = element;
+        return exchangedValue;
+    }
+
     @Override
-    public Iterator<Long> iterator() {
+    public void add(int index, Long element) {
+
+    }
+
+    @Override
+    public Long remove(int index) {
         return null;
     }
 
     @Override
     public boolean remove(Object o) {
         return false;
+    }
+
+    @Override
+    public Iterator<Long> iterator() {
+        return null;
     }
 
     @Override
@@ -167,21 +190,6 @@ public class MyArrayList<Long> implements List<Long> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public Long set(int index, Long element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, Long element) {
-
-    }
-
-    @Override
-    public Long remove(int index) {
-        return null;
     }
 
     @Override

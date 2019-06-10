@@ -129,4 +129,15 @@ public abstract class ListTestBase {
         assertThat(list.lastIndexOf(12L)).isEqualTo(-1);
         assertThat(list.lastIndexOf(null)).isEqualTo(23);
     }
+
+    @Test
+    void shouldSetGivenValueAtProvidedIndexInList() {
+        List<Long> list = getListType();
+        Collections.addAll(list, array1To11);
+        Long exchangedValue = list.set(0, 100L);
+        assertThat(exchangedValue).isEqualTo(1);
+        assertThat(list.get(0)).isEqualTo(100L);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(12, 1L)); // to move to separate test
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, 1L)); // to move to separate test
+    }
 }
