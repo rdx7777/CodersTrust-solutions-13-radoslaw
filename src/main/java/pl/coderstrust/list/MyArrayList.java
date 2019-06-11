@@ -24,7 +24,6 @@ public class MyArrayList<Long> implements List<Long> {
     }
 
     @Override // done with test
-    // what about WRONG OBJECT TYPE ???
     public boolean add(Long aLong) {
         if (size == MAXIMUM_CAPACITY) {
             return false;
@@ -53,7 +52,7 @@ public class MyArrayList<Long> implements List<Long> {
             }
         } else {
             for (int i = 0; i < size; i++) {
-                if (o.equals(elements[i])) { // order matters, but WHY ?????????????????????????????????????????????????
+                if (o.equals(elements[i])) { // order MATTERS ***************
 //                if (elements[i].equals(o)) {
                     return true;
                 }
@@ -78,7 +77,7 @@ public class MyArrayList<Long> implements List<Long> {
     }
 
     @Override // done with test
-    // is't interesting - BOTH VERSION ARE WORKING --- which is better ????????????????????????????????????????
+    // BOTH VERSION ARE WORKING --- which is better ??? *************************
     public void clear() {
 //        elements = new Object[INITIAL_CAPACITY];
         for (int i = 0; i < size; i++) {
@@ -108,7 +107,7 @@ public class MyArrayList<Long> implements List<Long> {
             }
         } else {
             for (int i = 0; i < size; i++) {
-                if (o.equals(elements[i])) { // order MATTERS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (o.equals(elements[i])) { // order MATTERS ***************
                     return i;
                 }
             }
@@ -126,7 +125,7 @@ public class MyArrayList<Long> implements List<Long> {
             }
         } else {
             for (int i = size - 1; i >= 0; i--) {
-                if (o.equals(elements[i])) { // order MATTERS... WHY ???????????????????????????????????????????????????
+                if (o.equals(elements[i])) { // order MATTERS ***************
                     return i;
                 }
             }
@@ -147,19 +146,69 @@ public class MyArrayList<Long> implements List<Long> {
         return exchangedValue;
     }
 
-    @Override
+    @Override // done with test
     public void add(int index, Long element) {
-
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
+        }
+        if (size == MAXIMUM_CAPACITY) {
+            throw new IndexOutOfBoundsException("List cannot be greater than its maximum capacity.");
+        }
+        if (size == elements.length) {
+            increaseCapacity();
+        }
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+        elements[index] = element;
+        size++;
     }
 
-    @Override
+    @Override // done with test
     public Long remove(int index) {
-        return null;
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
+        }
+        Long removedValue = (Long) elements[index];
+        int lengthOfCopiedData = size - index - 1;
+        if (lengthOfCopiedData > 0) {
+            System.arraycopy(elements, index + 1, elements, index, lengthOfCopiedData);
+        }
+        elements[size] = null;
+        size--;
+        return removedValue;
     }
 
-    @Override
+    @Override // done with test
     public boolean remove(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++)
+                if (elements[i] == null) {
+                    uncheckedRemove(i);
+                    return true;
+                }
+        } else {
+            for (int i = 0; i < size; i++)
+                if (o.equals(elements[i])) {
+                    uncheckedRemove(i);
+                    return true;
+                }
+        }
         return false;
+    }
+
+    // non tested method
+    public void uncheckedRemove(int index) {
+        int lengthOfCopiedData = size - index - 1;
+        if (lengthOfCopiedData > 0) {
+            System.arraycopy(elements, index + 1, elements, index, lengthOfCopiedData);
+        }
+        elements[size] = null;
+        size--;
     }
 
     @Override
