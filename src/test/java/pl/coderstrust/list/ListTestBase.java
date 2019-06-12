@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class ListTestBase {
 
     private List<Long> list;
@@ -29,6 +29,8 @@ public abstract class ListTestBase {
         assertThat(list.size()).isEqualTo(11);
         Collections.addAll(list, array1To5);
         assertThat(list.size()).isEqualTo(16);
+        list = getListType();
+        assertThat(list.size()).isEqualTo(0);
     }
 
     @Test
@@ -48,31 +50,21 @@ public abstract class ListTestBase {
     void shouldCheckIfListContainsProvidedObject() {
         assertFalse(list.contains(null));
         list.add(null);
-        assertTrue(list.contains(5L));
-        assertFalse(list.contains(122L));
-        assertFalse(list.contains(5d));
-        assertFalse(list.contains(5));
-        assertFalse(list.contains("example string"));
-        assertFalse(list.contains(0L));
         assertTrue(list.contains(null));
+        assertTrue(list.contains(5L));
+        assertFalse(list.contains(0L));
     }
 
     @Test
-        // WHY is this test working IF NEXT ONE IS WORKING AS WELL ???????????????????
     void shouldReturnListAsArray() {
-        // line below is NOT WORKING ******************************
-//        Long[] arrayOfLongs = (Long[]) list.toArray();
-        // and nest assertion cannot be checked
-//        assertThat(arrayOfLongs).isEqualTo(array1To11);
-        System.out.println(list.toArray()); // Object...
-        System.out.println(array1To11); // Long...
+        System.out.println(list.toArray());
+        System.out.println(array1To11);
         assertThat(list.toArray()).isEqualTo(array1To11);
     }
 
     @Test
     void shouldReturnListAsArrayOfProvidedType() {
-        Long[] expectedArray = new Long[0];
-        expectedArray = list.toArray(expectedArray);
+        Long[] expectedArray = list.toArray(new Long[0]);
         assertThat(expectedArray).isEqualTo(array1To11);
     }
 
@@ -80,8 +72,8 @@ public abstract class ListTestBase {
     void shouldClearList() {
         assertThat(list.size()).isEqualTo(11);
         list.clear();
-        assertThat(list.size()).isEqualTo(0); // ***** to be deleted ***** or not ???????????????
-        assertThrows(IndexOutOfBoundsException.class, () -> list.get(list.size()));
+        assertThat(list.size()).isEqualTo(0);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(list.size()), "Index cannot be greater than list size.");
     }
 
     @Test
@@ -114,8 +106,12 @@ public abstract class ListTestBase {
         Long exchangedValue = list.set(0, 100L);
         assertThat(exchangedValue).isEqualTo(1);
         assertThat(list.get(0)).isEqualTo(100L);
-        assertThrows(IndexOutOfBoundsException.class, () -> list.set(12, 1L)); // to move to separate test
-        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, 1L)); // to move to separate test
+    }
+
+    @Test
+    void shouldThrowExceptionWhileSettingGivenValueAtNonExistingIndexInList() {
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(12, 1L));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, 1L));
     }
 
     @Test
@@ -136,6 +132,10 @@ public abstract class ListTestBase {
         assertThat(list.size()).isEqualTo(9);
         assertThat(list.remove(0)).isEqualTo(1L);
         assertThat(list.size()).isEqualTo(8);
+    }
+
+    @Test
+    void shouldThrowExceptionWhileRemovingElementAtNonExistingIndexFromList() {
         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(20));
     }
@@ -148,6 +148,36 @@ public abstract class ListTestBase {
         assertThat(list.size()).isEqualTo(9);
         assertTrue(list.remove(1L));
         assertThat(list.size()).isEqualTo(8);
+        list.add(null);
+        assertTrue(list.remove(null));
         assertFalse(list.remove(100L));
+    }
+
+    @Test
+    void shouldReturnCorrectValueForNextAndHasNextMethodsInIterator() {
+        list = getListType();
+        Collections.addAll(list, array1To5);
+        Iterator<Long> iterator = list.iterator();
+        for (int i = 0; i < list.size(); i++) {
+            assertTrue(iterator.hasNext());
+            assertThat(iterator.next()).isEqualTo((long) (i + 1));
+        }
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    void shouldCorrectlyRemoveValueWhileUsingIterator() {
+        list = getListType();
+        Collections.addAll(list, array1To5);
+        Iterator<Long> iterator = list.iterator();
+        int j = list.size();
+        for (int i = 0; i < j; i++) {
+            if (iterator.hasNext()) {
+                iterator.next();
+                iterator.remove();
+            }
+        }
+        assertThat(list.size()).isEqualTo(0);
+        assertFalse(iterator.hasNext());
     }
 }

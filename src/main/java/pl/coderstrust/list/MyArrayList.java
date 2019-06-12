@@ -2,71 +2,63 @@ package pl.coderstrust.list;
 
 import java.util.*;
 
-public class MyArrayList<Long> implements List<Long> {
+public class MyArrayList<T> implements List<T> {
 
     private static final int INITIAL_CAPACITY = 10;
     private static final int MAXIMUM_CAPACITY = 2_000_000_000;
     private int size;
     private Object elements[];
 
-    public MyArrayList() { // done
+    public MyArrayList() {
         elements = new Object[INITIAL_CAPACITY];
     }
 
-    @Override // done with test
+    @Override
     public int size() {
         return size;
     }
 
-    @Override // done with test
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override // done with test
-    public boolean add(Long aLong) {
+    @Override
+    public boolean add(T element) {
         if (size == MAXIMUM_CAPACITY) {
             return false;
         }
         if (size == elements.length) {
             increaseCapacity();
         }
-        elements[size++] = aLong;
+        elements[size++] = element;
         return true;
     }
 
-    // extra added method **********************************************************************************************
-    // NOT TESTED YET !!!!!!!!!!!!!! ***********************************************************************************
-    public void increaseCapacity() {
+    private void increaseCapacity() {
         int newSize = elements.length * 2;
         elements = Arrays.copyOf(elements, newSize);
     }
 
-    @Override // done with test
+    @Override
     public boolean contains(Object o) {
         if (o == null) {
-            for (int i = 0; i < size; i++) {
-                if (elements[i] == null) {
-                    return true;
-                }
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (o.equals(elements[i])) { // order MATTERS ***************
-//                if (elements[i].equals(o)) {
-                    return true;
-                }
-            }
+            return Arrays.stream(elements)
+                    .limit(size)
+                    .anyMatch(e -> e == null);
         }
-        return false;
+        return Arrays.stream(elements)
+                .limit(size)
+                .filter(e -> e != null)
+                .anyMatch(e -> e.equals(o));
     }
 
-    @Override // done with test
+    @Override
     public Object[] toArray() {
         return Arrays.copyOf(elements, size);
     }
 
-    @Override // done with test
+    @Override
     public <T> T[] toArray(T[] a) {
         if (a.length < size)
             return (T[]) Arrays.copyOf(elements, size, a.getClass());
@@ -76,28 +68,24 @@ public class MyArrayList<Long> implements List<Long> {
         return a;
     }
 
-    @Override // done with test
-    // BOTH VERSION ARE WORKING --- which is better ??? *************************
+    @Override
     public void clear() {
-//        elements = new Object[INITIAL_CAPACITY];
-        for (int i = 0; i < size; i++) {
-            elements[i] = null;
-        }
+        elements = new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
-    @Override // done with test
-    public Long get(int index) {
+    @Override
+    public T get(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be lower than 0.");
         }
         if (index >= size) {
-            throw new IndexOutOfBoundsException("Index cannot be greater than list size");
+            throw new IndexOutOfBoundsException("Index cannot be greater than list size.");
         }
-        return (Long) elements[index];
+        return (T) elements[index];
     }
 
-    @Override // done with test
+    @Override
     public int indexOf(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++) {
@@ -107,7 +95,7 @@ public class MyArrayList<Long> implements List<Long> {
             }
         } else {
             for (int i = 0; i < size; i++) {
-                if (o.equals(elements[i])) { // order MATTERS ***************
+                if (o.equals(elements[i])) {
                     return i;
                 }
             }
@@ -115,7 +103,7 @@ public class MyArrayList<Long> implements List<Long> {
         return -1;
     }
 
-    @Override // done with test
+    @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
             for (int i = size - 1; i >= 0; i--) {
@@ -125,7 +113,7 @@ public class MyArrayList<Long> implements List<Long> {
             }
         } else {
             for (int i = size - 1; i >= 0; i--) {
-                if (o.equals(elements[i])) { // order MATTERS ***************
+                if (o.equals(elements[i])) {
                     return i;
                 }
             }
@@ -133,21 +121,21 @@ public class MyArrayList<Long> implements List<Long> {
         return -1;
     }
 
-    @Override // done with test
-    public Long set(int index, Long element) {
+    @Override
+    public T set(int index, T element) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
         }
-        Long exchangedValue = (Long) elements[index];
+        T exchangedValue = (T) elements[index];
         elements[index] = element;
         return exchangedValue;
     }
 
-    @Override // done with test
-    public void add(int index, Long element) {
+    @Override
+    public void add(int index, T element) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
         }
@@ -165,25 +153,20 @@ public class MyArrayList<Long> implements List<Long> {
         size++;
     }
 
-    @Override // done with test
-    public Long remove(int index) {
+    @Override
+    public T remove(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
         }
-        Long removedValue = (Long) elements[index];
-        int lengthOfCopiedData = size - index - 1;
-        if (lengthOfCopiedData > 0) {
-            System.arraycopy(elements, index + 1, elements, index, lengthOfCopiedData);
-        }
-        elements[size] = null;
-        size--;
+        T removedValue = (T) elements[index];
+        uncheckedRemove(index);
         return removedValue;
     }
 
-    @Override // done with test
+    @Override
     public boolean remove(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++)
@@ -201,58 +184,102 @@ public class MyArrayList<Long> implements List<Long> {
         return false;
     }
 
-    // non tested method
-    public void uncheckedRemove(int index) {
+    private void uncheckedRemove(int index) {
         int lengthOfCopiedData = size - index - 1;
         if (lengthOfCopiedData > 0) {
             System.arraycopy(elements, index + 1, elements, index, lengthOfCopiedData);
         }
         elements[size] = null;
         size--;
+        if (size <= elements.length / 4) {
+            decreaseCapacity();
+        }
+    }
+
+    private void decreaseCapacity() {
+        int newSize = elements.length / 4 + 1;
+        elements = Arrays.copyOf(elements, newSize);
     }
 
     @Override
-    public Iterator<Long> iterator() {
-        return null;
+    public Iterator<T> iterator() {
+        return new Itrtr();
+    }
+
+    private class Itrtr implements Iterator<T> {
+        int cursor;
+        int lastRet = -1;
+
+        Itrtr() {
+        }
+
+        public boolean hasNext() {
+            return cursor != size;
+        }
+
+        @SuppressWarnings("unchecked") // ***************** delete? *****************
+        public T next() {
+            int i = cursor;
+            if (i >= size)
+                throw new NoSuchElementException();
+            Object[] elementData = MyArrayList.this.elements;
+            if (i >= elementData.length)
+                throw new ConcurrentModificationException();
+            cursor = i + 1;
+            return (T) elementData[lastRet = i];
+        }
+
+        public void remove() {
+            if (lastRet < 0) {
+                throw new IllegalStateException();
+            }
+            try {
+                MyArrayList.this.remove(lastRet);
+                cursor = lastRet;
+                lastRet = -1;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends Long> c) {
-        return false;
+    public boolean addAll(Collection<? extends T> c) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Long> c) {
-        return false;
+    public boolean addAll(int index, Collection<? extends T> c) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public ListIterator<Long> listIterator() {
-        return null;
+    public ListIterator<T> listIterator() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public ListIterator<Long> listIterator(int index) {
-        return null;
+    public ListIterator<T> listIterator(int index) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Long> subList(int fromIndex, int toIndex) {
-        return null;
+    public List<T> subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
     }
 }
