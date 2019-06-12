@@ -57,8 +57,6 @@ public abstract class ListTestBase {
 
     @Test
     void shouldReturnListAsArray() {
-        System.out.println(list.toArray());
-        System.out.println(array1To11);
         assertThat(list.toArray()).isEqualTo(array1To11);
     }
 

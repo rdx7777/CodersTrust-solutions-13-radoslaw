@@ -7,7 +7,7 @@ public class MyArrayList<T> implements List<T> {
     private static final int INITIAL_CAPACITY = 10;
     private static final int MAXIMUM_CAPACITY = 2_000_000_000;
     private int size;
-    private Object elements[];
+    private Object[] elements;
 
     public MyArrayList() {
         elements = new Object[INITIAL_CAPACITY];
@@ -60,11 +60,13 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        if (a.length < size)
+        if (a.length < size) {
             return (T[]) Arrays.copyOf(elements, size, a.getClass());
+        }
         System.arraycopy(elements, 0, a, 0, size);
-        if (a.length > size)
+        if (a.length > size) {
             a[size] = null;
+        }
         return a;
     }
 
@@ -220,11 +222,13 @@ public class MyArrayList<T> implements List<T> {
         @SuppressWarnings("unchecked") // ***************** delete? *****************
         public T next() {
             int i = cursor;
-            if (i >= size)
+            if (i >= size) {
                 throw new NoSuchElementException();
+            }
             Object[] elementData = MyArrayList.this.elements;
-            if (i >= elementData.length)
+            if (i >= elementData.length) {
                 throw new ConcurrentModificationException();
+            }
             cursor = i + 1;
             return (T) elementData[lastRet = i];
         }
