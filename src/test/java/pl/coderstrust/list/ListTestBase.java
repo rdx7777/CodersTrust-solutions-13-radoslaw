@@ -13,21 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class ListTestBase {
 
     private List<Long> list;
-    private Long[] array1To5 = {1L, 2L, 3L, 4L, 5L};
-    private Long[] array1To11 = {1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L};
 
     public abstract List<Long> getListType();
 
     @BeforeEach
     void setup() {
         list = getListType();
-        Collections.addAll(list, array1To11);
+        Collections.addAll(list, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L);
     }
 
     @Test
     void shouldReturnCorrectListSize() {
         assertThat(list.size()).isEqualTo(11);
-        Collections.addAll(list, array1To5);
+        Collections.addAll(list, 1L, 2L, 3L, 4L, 5L);
         assertThat(list.size()).isEqualTo(16);
         list = getListType();
         assertThat(list.size()).isEqualTo(0);
@@ -57,13 +55,13 @@ public abstract class ListTestBase {
 
     @Test
     void shouldReturnListAsArray() {
-        assertThat(list.toArray()).isEqualTo(array1To11);
+        assertThat(list.toArray()).isEqualTo(new Long[]{1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L});
     }
 
     @Test
     void shouldReturnListAsArrayOfProvidedType() {
         Long[] expectedArray = list.toArray(new Long[0]);
-        assertThat(expectedArray).isEqualTo(array1To11);
+        assertThat(expectedArray).isEqualTo(new Long[]{1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L});
     }
 
     @Test
@@ -92,7 +90,7 @@ public abstract class ListTestBase {
     void shouldReturnLastIndexOfProvidedElement() {
         assertThat(list.lastIndexOf(null)).isEqualTo(-1);
         list.add(null);
-        Collections.addAll(list, array1To11);
+        Collections.addAll(list, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L);
         list.add(null);
         assertThat(list.lastIndexOf(5L)).isEqualTo(16);
         assertThat(list.lastIndexOf(12L)).isEqualTo(-1);
@@ -154,7 +152,7 @@ public abstract class ListTestBase {
     @Test
     void shouldReturnCorrectValueForNextAndHasNextMethodsInIterator() {
         list = getListType();
-        Collections.addAll(list, array1To5);
+        Collections.addAll(list, 1L, 2L, 3L, 4L, 5L);
         Iterator<Long> iterator = list.iterator();
         for (int i = 0; i < list.size(); i++) {
             assertTrue(iterator.hasNext());
@@ -166,7 +164,7 @@ public abstract class ListTestBase {
     @Test
     void shouldCorrectlyRemoveValueWhileUsingIterator() {
         list = getListType();
-        Collections.addAll(list, array1To5);
+        Collections.addAll(list, 1L, 2L, 3L, 4L, 5L);
         Iterator<Long> iterator = list.iterator();
         int j = list.size();
         for (int i = 0; i < j; i++) {

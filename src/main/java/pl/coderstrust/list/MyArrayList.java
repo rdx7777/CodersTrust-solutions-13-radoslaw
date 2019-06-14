@@ -36,7 +36,12 @@ public class MyArrayList<T> implements List<T> {
     }
 
     private void increaseCapacity() {
-        int newSize = elements.length * 2;
+        int newSize;
+        if (size >= (MAXIMUM_CAPACITY / 2)) {
+            newSize = MAXIMUM_CAPACITY;
+        } else {
+            newSize = elements.length * 2;
+        }
         elements = Arrays.copyOf(elements, newSize);
     }
 
@@ -219,7 +224,7 @@ public class MyArrayList<T> implements List<T> {
             return cursor != size;
         }
 
-        @SuppressWarnings("unchecked") // ***************** delete? *****************
+        @SuppressWarnings("unchecked")
         public T next() {
             int i = cursor;
             if (i >= size) {
