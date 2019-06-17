@@ -154,4 +154,16 @@ class MyLinkedListTest {
         assertThat(list.size()).isEqualTo(0);
         assertFalse(iterator.hasNext());
     }
+
+    @Test
+    void shouldCheckIfListContainsProvidedElement() {
+        assertTrue(list.contains(0));
+        assertFalse(list.contains(100));
+    }
+
+    @Test
+    void shouldThrowExceptionWhileCheckingIfEmptyListContainsProvidedElement() {
+        list = new MyLinkedList<>();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.contains(0), "Passed value cannot be applied to empty list.");
+    }
 }

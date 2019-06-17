@@ -73,7 +73,7 @@ public class MyLinkedList<T> {
 
     public boolean remove(T elementToRemove) {
         if (isEmpty()) {
-                throw new IndexOutOfBoundsException("Passed value cannot be applied to empty list.");
+            throw new IndexOutOfBoundsException("Passed value cannot be applied to empty list.");
         }
         Node<T> currentNode = first;
         while (currentNode != null) {
@@ -180,5 +180,25 @@ public class MyLinkedList<T> {
                 uncheckedRemove(lastReturned);
             }
         }
+    }
+
+    public boolean contains(T element) {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("Passed value cannot be applied to empty list.");
+        }
+        Node<T> currentNode = first;
+        while (currentNode != null) {
+            if (element == null) {
+                if (currentNode.element == null) {
+                    return true;
+                }
+            } else {
+                if (element.equals(currentNode.element)) {
+                    return true;
+                }
+            }
+            currentNode = currentNode.next;
+        }
+        return false;
     }
 }
