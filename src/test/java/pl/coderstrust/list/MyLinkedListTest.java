@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MyLinkedListTest {
 
@@ -73,20 +74,23 @@ class MyLinkedListTest {
 
     @Test
     void shouldRemoveProvidedElementFromList() {
-        assertThat(list.size()).isEqualTo(12);
-        assertFalse(list.remove(100));
-        assertThat(list.size()).isEqualTo(12);
-        assertThat(list.get(0)).isEqualTo(0);
         assertTrue(list.remove(0));
+        assertThat(list.size()).isEqualTo(11);
         assertThat(list.get(3)).isEqualTo(3);
-        assertThat(list.size()).isEqualTo(11);
-        assertFalse(list.remove(null));
+    }
+
+    @Test
+    void shouldRemoveNullFromList() {
         list.add(null);
-        assertThat(list.size()).isEqualTo(12);
+        assertThat(list.size()).isEqualTo(13);
         assertTrue(list.remove(null));
-        assertThat(list.size()).isEqualTo(11);
-        assertTrue(list.remove(9));
-        assertThat(list.size()).isEqualTo(10);
+        assertThat(list.size()).isEqualTo(12);
+    }
+
+    @Test
+    void shouldReturnFalseWhenRemoveNonExistingElementFromList() {
+        assertFalse(list.remove(100));
+        assertFalse(list.remove(null));
     }
 
     @Test
@@ -96,29 +100,36 @@ class MyLinkedListTest {
     }
 
     @Test
-    void shouldAddElementAtProvidedIndexToList() {
+    void shouldAddElementAtProvidedIndexToEmptyList() {
         list = new MyLinkedList<>();
-        list.add(0);
-        list.add(1);
-        list.add(2);
-        assertThat(list.size()).isEqualTo(3);
-        assertThat(list.get(1)).isEqualTo(1);
-        assertThat(list.get(2)).isEqualTo(2);
-        list.add(0, 50);
-        assertThat(list.size()).isEqualTo(4);
-        assertThat(list.get(0)).isEqualTo(50);
-        assertThat(list.get(1)).isEqualTo(0);
-        assertThat(list.get(2)).isEqualTo(1);
-        assertThat(list.get(3)).isEqualTo(2);
-        list.add(1, 100);
-        assertThat(list.size()).isEqualTo(5);
-        assertThat(list.get(1)).isEqualTo(100);
-        assertThat(list.get(2)).isEqualTo(0);
-        assertThat(list.get(3)).isEqualTo(1);
-        assertThat(list.get(4)).isEqualTo(2);
-        list.add(5, 200);
-        assertThat(list.size()).isEqualTo(6);
-        assertThat(list.get(5)).isEqualTo(200);
+        assertTrue(list.add(0, 100));
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0)).isEqualTo(100);
+    }
+
+    @Test
+    void shouldAddElementAtBeginningOfNonEmptyList() {
+        assertThat(list.size()).isEqualTo(12);
+        assertTrue(list.add(0, 100));
+        assertThat(list.size()).isEqualTo(13);
+        assertThat(list.get(0)).isEqualTo(100);
+    }
+
+    @Test
+    void shouldAddElementAtEndOfNonEmptyList() {
+        assertThat(list.size()).isEqualTo(12);
+        assertTrue(list.add(12, 100));
+        assertThat(list.size()).isEqualTo(13);
+        assertThat(list.get(12)).isEqualTo(100);
+    }
+
+    @Test
+    void shouldAddElementInTheMiddleOfList() {
+        assertThat(list.size()).isEqualTo(12);
+        assertTrue(list.add(5, 100));
+        assertThat(list.size()).isEqualTo(13);
+        assertThat(list.get(5)).isEqualTo(100);
+        assertThat(list.get(6)).isEqualTo(4);
     }
 
     @Test
@@ -131,7 +142,7 @@ class MyLinkedListTest {
     void shouldThrowExceptionWhileAddingElementToEmptyListAtForbiddenIndex() {
         list = new MyLinkedList<>();
         assertThrows(IndexOutOfBoundsException.class, () -> list.add(-1, 100), "When adding to empty list passed index cannot be different than 0.");
-        assertThrows(IndexOutOfBoundsException.class, () -> list.add(20, 100), "When adding to empty list passed index cannot be different than 0.");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(1, 100), "When adding to empty list passed index cannot be different than 0.");
     }
 
     @Test
@@ -162,8 +173,8 @@ class MyLinkedListTest {
     }
 
     @Test
-    void shouldThrowExceptionWhileCheckingIfEmptyListContainsProvidedElement() {
+    void shouldReturnFalseWhileCheckingIfEmptyListContainsProvidedElement() {
         list = new MyLinkedList<>();
-        assertThrows(IndexOutOfBoundsException.class, () -> list.contains(0), "Passed value cannot be applied to empty list.");
+        assertFalse(list.contains(0));
     }
 }

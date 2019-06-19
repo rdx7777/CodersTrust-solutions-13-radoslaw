@@ -7,9 +7,9 @@ public class MyLinkedList<T> {
 
     private Node<T> first;
     private Node<T> last;
+    private int size;
 
     private static class Node<T> {
-
         private T element;
         private Node<T> previous;
         private Node<T> next;
@@ -23,7 +23,7 @@ public class MyLinkedList<T> {
         return first == null;
     }
 
-    public void add(T element) {
+    public boolean add(T element) {
         if (first == null) {
             first = new Node<>(element);
             last = first;
@@ -33,16 +33,12 @@ public class MyLinkedList<T> {
             last.previous = previousLast;
             previousLast.next = last;
         }
+        size++;
+        return true;
     }
 
     public int size() {
-        int size = 0;
-        Node<T> currentNode = first;
-        while (currentNode != null) {
-            size++;
-            currentNode = currentNode.next;
-        }
-        return size;
+        return this.size;
     }
 
     public T get(int index) {
@@ -60,13 +56,11 @@ public class MyLinkedList<T> {
 
     private Node<T> getNode(int index) {
         Node<T> currentNode = first;
-        int currentIndex = index;
-        while (currentIndex > 0) {
-            if (currentNode == null) { // ******************** doubled condition == if(isEmpty()) in line 49 ***********
+        for (int i = index; i > 0; i--) {
+            if (currentNode == null) {
                 throw new IndexOutOfBoundsException();
             }
             currentNode = currentNode.next;
-            currentIndex--;
         }
         return currentNode;
     }
@@ -76,19 +70,22 @@ public class MyLinkedList<T> {
             throw new IndexOutOfBoundsException("Passed value cannot be applied to empty list.");
         }
         Node<T> currentNode = first;
-        while (currentNode != null) {
-            if (elementToRemove == null) {
+        if (elementToRemove == null) {
+            while (currentNode != null) {
                 if (currentNode.element == null) {
                     uncheckedRemove(currentNode);
                     return true;
                 }
-            } else {
+                currentNode = currentNode.next;
+            }
+        } else {
+            while (currentNode != null) {
                 if (elementToRemove.equals(currentNode.element)) {
                     uncheckedRemove(currentNode);
                     return true;
                 }
+                currentNode = currentNode.next;
             }
-            currentNode = currentNode.next;
         }
         return false;
     }
@@ -103,24 +100,25 @@ public class MyLinkedList<T> {
         }
         if (nextNode != null) {
             nextNode.previous = previousNode;
+        } else {
+            last = currentNode.previous;
         }
+        size--;
     }
 
     public boolean add(int index, T element) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Passed index cannot be lower than 0.");
         }
-        // adding to empty list
-        if (first == null && index != 0) {
-            throw new IndexOutOfBoundsException("When adding to empty list passed index cannot be different than 0.");
+        if (index > size()) {
+            throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
         }
+        // adding to empty list
         if (first == null && index == 0) {
             first = new Node<>(element);
             last = first;
+            size++;
             return true;
-        }
-        if (first != null && index > size()) {
-            throw new IndexOutOfBoundsException("Passed index cannot be greater than list size.");
         }
         Node<T> nodeAtIndex = getNode(index);
         // adding at the end of the list
@@ -129,6 +127,7 @@ public class MyLinkedList<T> {
             last = new Node<>(element);
             last.previous = previousLast;
             previousLast.next = last;
+            size++;
             return true;
         }
         // adding at the beginning of the list
@@ -137,6 +136,7 @@ public class MyLinkedList<T> {
             first = new Node<>(element);
             first.next = previousFirst;
             previousFirst.previous = first;
+            size++;
             return true;
         }
         // adding between existing nodes
@@ -146,20 +146,18 @@ public class MyLinkedList<T> {
         newNode.previous = previous;
         newNode.next = nodeAtIndex;
         nodeAtIndex.previous = newNode;
+        size++;
         return true;
     }
 
     public Iterator<T> iterator() {
-        return new Itrtr();
+        return new MyIterator();
     }
 
-    private class Itrtr implements Iterator<T> {
+    private class MyIterator implements Iterator<T> {
 
         private Node<T> current = first;
         private Node<T> lastReturned;
-
-        Itrtr() {
-        }
 
         public boolean hasNext() {
             return current != null;
@@ -184,20 +182,23 @@ public class MyLinkedList<T> {
 
     public boolean contains(T element) {
         if (isEmpty()) {
-            throw new IndexOutOfBoundsException("Passed value cannot be applied to empty list.");
+            return false;
         }
         Node<T> currentNode = first;
-        while (currentNode != null) {
-            if (element == null) {
+        if (element == null) {
+            while (currentNode != null) {
                 if (currentNode.element == null) {
                     return true;
                 }
-            } else {
+                currentNode = currentNode.next;
+            }
+        } else {
+            while (currentNode != null) {
                 if (element.equals(currentNode.element)) {
                     return true;
                 }
+                currentNode = currentNode.next;
             }
-            currentNode = currentNode.next;
         }
         return false;
     }
