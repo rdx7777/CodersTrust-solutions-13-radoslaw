@@ -2,7 +2,6 @@ package pl.coderstrust.multithreading;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 public class MultithreadingMagazine {
 
@@ -18,7 +17,7 @@ public class MultithreadingMagazine {
                 System.out.println("Produced: " + i);
                 try {
                     sleep1();
-                    queue.offer("Result " + i, 2, TimeUnit.SECONDS);
+                    queue.put("Result " + i);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -28,7 +27,7 @@ public class MultithreadingMagazine {
             for (int i = 0; i < 25; i++) {
                 try {
                     sleep2();
-                    String result = queue.poll(0, TimeUnit.SECONDS);
+                    String result = queue.take();
                     System.out.println("Consumed: " + result);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -51,7 +50,7 @@ public class MultithreadingMagazine {
 
     private static void sleep2() {
         try {
-            Thread.sleep(2_000);
+            Thread.sleep(5_000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
