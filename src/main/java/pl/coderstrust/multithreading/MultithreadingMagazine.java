@@ -20,6 +20,7 @@ public class MultithreadingMagazine {
                     queue.put("Result " + i);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -31,6 +32,7 @@ public class MultithreadingMagazine {
                     System.out.println("Consumed: " + result);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
