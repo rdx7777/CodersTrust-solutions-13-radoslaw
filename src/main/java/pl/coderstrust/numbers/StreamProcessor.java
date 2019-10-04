@@ -20,7 +20,7 @@ public class StreamProcessor {
         try (Stream<String> stream = Files.lines(Paths.get(inputFilePath))) {
             try (PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath))) {
                 stream.filter(LineValidator::isLineValid)
-                    .map(line -> line.split("\\s+"))
+                    .map(line -> line.trim().split("\\s+"))
                     .map(arrayOfNumbers -> {
                         String numbers = Arrays.stream(arrayOfNumbers)
                             .reduce((result, element) -> String.format("%s+%s", result, element))
