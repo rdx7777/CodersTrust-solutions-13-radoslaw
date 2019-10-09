@@ -7,16 +7,18 @@ public class Producer implements Runnable {
 
     private BlockingQueue<String> queue;
     private Duration duration;
+    private int amount;
 
-    public Producer(BlockingQueue<String> queue, Duration duration) {
+    public Producer(BlockingQueue<String> queue, Duration duration, int amount) {
         this.queue = queue;
         this.duration = duration;
+        this.amount = amount;
     }
 
     @Override
     public void run() {
         new Thread(() -> {
-            for (int i = 0; i < 25; i++) {
+            for (int i = 0; i < amount; i++) {
                 System.out.println("Produced: " + i);
                 try {
                     Thread.sleep(duration.toMillis());

@@ -7,16 +7,18 @@ public class Consumer implements Runnable {
 
     private BlockingQueue<String> queue;
     private Duration duration;
+    private int amount;
 
-    public Consumer(BlockingQueue<String> queue, Duration duration) {
+    public Consumer(BlockingQueue<String> queue, Duration duration, int amount) {
         this.queue = queue;
         this.duration = duration;
+        this.amount = amount;
     }
 
     @Override
     public void run() {
         new Thread(() -> {
-            for (int i = 0; i < 25; i++) {
+            for (int i = 0; i < amount; i++) {
                 try {
                     Thread.sleep(duration.toMillis());
                     String result = queue.take();
