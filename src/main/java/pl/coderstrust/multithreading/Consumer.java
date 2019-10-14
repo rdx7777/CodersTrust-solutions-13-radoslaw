@@ -15,19 +15,34 @@ public class Consumer implements Runnable {
         this.amount = amount;
     }
 
+//    @Override
+//    public void run() {
+//        new Thread(() -> {
+//            for (int i = 0; i < amount; i++) {
+//                try {
+//                    Thread.sleep(duration.toMillis());
+//                    String result = queue.take();
+//                    System.out.println("Consumed by " + Thread.currentThread().getName() + ": " + result);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//        }).start();
+//    }
+
     @Override
     public void run() {
-        new Thread(() -> {
-            for (int i = 0; i < amount; i++) {
-                try {
-                    Thread.sleep(duration.toMillis());
-                    String result = queue.take();
-                    System.out.println("Consumed by " + Thread.currentThread().getName() + ": " + result);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Thread.currentThread().interrupt();
-                }
+        for (int i = 0; i < amount; i++) {
+            try {
+                Thread.sleep(duration.toMillis());
+                String result = queue.take();
+                System.out.println("Consumed by " + Thread.currentThread().getName() + ": " + result);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
-        }).start();
+        }
     }
+
 }
