@@ -15,22 +15,6 @@ public class Producer implements Runnable {
         this.amount = amount;
     }
 
-//    @Override
-//    public void run() {
-//        new Thread(() -> {
-//            for (int i = 0; i < amount; i++) {
-//                System.out.println("Produced: " + i);
-//                try {
-//                    Thread.sleep(duration.toMillis());
-//                    queue.put("Result " + i + " by " + Thread.currentThread().getName());
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                    Thread.currentThread().interrupt();
-//                }
-//            }
-//        }).start();
-//    }
-
     @Override
     public void run() {
         for (int i = 0; i < amount; i++) {
@@ -44,5 +28,4 @@ public class Producer implements Runnable {
             }
         }
     }
-
 }

@@ -12,6 +12,6 @@ public class ScenarioB {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         executor.submit(new Producer(queue, Duration.ofMillis(100), 25));
         executor.submit(new Consumer(queue, Duration.ofMillis(500), 25));
-        executor.shutdownNow();
+        executor.shutdown();
     }
 }

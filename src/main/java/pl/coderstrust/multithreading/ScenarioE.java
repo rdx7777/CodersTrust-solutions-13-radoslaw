@@ -16,6 +16,6 @@ public class ScenarioE {
         executor.submit(new Consumer(queue, Duration.ofMillis(50), 25));
         executor.submit(new Consumer(queue, Duration.ofMillis(150), 25));
         executor.submit(new Consumer(queue, Duration.ofMillis(500), 25));
-        executor.shutdownNow();
+        executor.shutdown();
     }
 }
